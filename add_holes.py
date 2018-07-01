@@ -5,18 +5,25 @@ import sys
 import argparse
 from random import random
 
-def make_word_replacer(ratio):
+DEFAULT_HOLE_SIZE = 5
+
+
+def make_word_replacer(ratio, fixed_size=True):
     def replace_word(match):
         word = match.group(0)
         if random() < ratio:
-            return "_" * len(word)
+            size = DEFAULT_HOLE_SIZE if fixed_size else len(word)
+            return "_" * size
         return word
     return replace_word
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("file", default=sys.stdin, type=argparse.FileType('r'))
-    p.add_argument("--ratio", "-r", type=float, default=0.12)
+    p.add_argument("--ratio", "-r", type=float, default=0.12,
+        help="Holes ratio")
+    p.add_argument("--fixed-size", action="store_true",
+        help="Make holes of a fixed size instead of the length of the original word")
     args = p.parse_args()
 
     ratio = args.ratio
@@ -26,7 +33,9 @@ def main():
     text = args.file.read()
     args.file.close()
 
-    text_with_holes = re.sub(r"[a-zA-Z0-9]{2,}", make_word_replacer(ratio), text)
+    replacer = make_word_replacer(ratio, fixed_size=args.fixed_size)
+
+    text_with_holes = re.sub(r"[a-zA-Z0-9]{2,}", replacer, text)
     print(text_with_holes)
 
 
