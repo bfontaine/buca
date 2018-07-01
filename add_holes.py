@@ -7,15 +7,32 @@ from random import random
 
 DEFAULT_HOLE_SIZE = 5
 
+class WordReplacer:
+    def __init__(self, ratio, fixed_size=True, numbers=False):
+        self.ratio = ratio
+        self.fixed_size = fixed_size
+        self.numbers = numbers
 
-def make_word_replacer(ratio, fixed_size=True):
-    def replace_word(match):
-        word = match.group(0)
-        if random() < ratio:
-            size = DEFAULT_HOLE_SIZE if fixed_size else len(word)
-            return "_" * size
-        return word
-    return replace_word
+        self._index = 0
+
+    def replace_match(self, match):
+        return self.replace_word(match.group(0))
+
+    def replace_word(self, word):
+        if random() >= self.ratio:
+            return word
+
+        return self.make_hole(word)
+
+    def make_hole(self, word):
+        self._index += 1
+
+        size = DEFAULT_HOLE_SIZE if self.fixed_size else len(word)
+        hole = "_" * size
+        if self.numbers:
+            hole = "(%d) %s" % (self._index, hole)
+
+        return hole
 
 def main():
     p = argparse.ArgumentParser()
@@ -24,6 +41,7 @@ def main():
         help="Holes ratio")
     p.add_argument("--fixed-size", action="store_true",
         help="Make holes of a fixed size instead of the length of the original word")
+    p.add_argument("--numbers", "-n", action="store_true")
     args = p.parse_args()
 
     ratio = args.ratio
@@ -33,9 +51,11 @@ def main():
     text = args.file.read()
     args.file.close()
 
-    replacer = make_word_replacer(ratio, fixed_size=args.fixed_size)
+    replacer = WordReplacer(ratio,
+            numbers=args.numbers,
+            fixed_size=args.fixed_size)
 
-    text_with_holes = re.sub(r"[a-zA-Z0-9]{2,}", replacer, text)
+    text_with_holes = re.sub(r"[a-zA-Z0-9]{2,}", replacer.replace_match, text)
     print(text_with_holes)
 
 
