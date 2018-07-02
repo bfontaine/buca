@@ -25,7 +25,7 @@ Note that a word is defined as a sequence of two or more alphanumerical
 characters, without diacritics. I might change that but for now it covers the
 letters used in the language I’m currently learning (Italian).
 
-## Example
+## Examples
 
 Raw text:
 ```
@@ -41,6 +41,9 @@ due orecchie ed un solo cervello
 
 ```
 $ python3 buca.py example.txt
+```
+
+```
 Le cose che abbiamo in comune sono 4850
 le conto da sempre, da ______ __ hai detto
 "ma dai, pure tu sei degli anno '__?"
@@ -53,6 +56,9 @@ due orecchie ed un solo cervello
 
 ```
 $ python3 buca.py --ratio 0.2 example.txt
+```
+
+```
 Le cose che abbiamo __ comune sono ____
 le conto da sempre, da quando __ hai detto
 "ma dai, pure tu sei degli ____ '60?"
@@ -65,6 +71,9 @@ due ________ __ un solo cervello
 
 ```
 $ python3 buca.py --fixed-size example.txt
+```
+
+```
 Le cose che abbiamo in comune sono 4850
 _____ conto da sempre, da quando mi hai _____
 "ma dai, pure tu sei degli anno '60?"
@@ -77,6 +86,9 @@ due orecchie ed un solo cervello
 
 ```
 $ python3 buca.py --numbers example.txt
+```
+
+```
 Le (1) ____ che abbiamo in comune sono (2) ____
 le conto da sempre, da quando mi hai detto
 "ma dai, pure tu sei degli anno '60?"
