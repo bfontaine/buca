@@ -55,7 +55,7 @@ def main():
             numbers=args.numbers,
             fixed_size=args.fixed_size)
 
-    text_with_holes = re.sub(r"[a-zA-Z0-9]{2,}", replacer.replace_match, text)
+    text_with_holes = re.sub(r"[a-zA-Z0-9àè]{2,}", replacer.replace_match, text)
     print(text_with_holes)
 
 
