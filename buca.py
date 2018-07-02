@@ -5,7 +5,7 @@ import sys
 import argparse
 from random import random
 
-DEFAULT_HOLE_SIZE = 5
+DEFAULT_BLANK_SIZE = 5
 
 class WordReplacer:
     def __init__(self, ratio, fixed_size=True, numbers=False):
@@ -22,26 +22,28 @@ class WordReplacer:
         if random() >= self.ratio:
             return word
 
-        return self.make_hole(word)
+        return self.make_blank(word)
 
-    def make_hole(self, word):
+    def make_blank(self, word):
         self._index += 1
 
-        size = DEFAULT_HOLE_SIZE if self.fixed_size else len(word)
-        hole = "_" * size
+        size = DEFAULT_BLANK_SIZE if self.fixed_size else len(word)
+        blank = "_" * size
         if self.numbers:
-            hole = "(%d) %s" % (self._index, hole)
+            blank = "(%d) %s" % (self._index, blank)
 
-        return hole
+        return blank
 
 def main():
-    p = argparse.ArgumentParser()
-    p.add_argument("file", default=sys.stdin, type=argparse.FileType('r'))
+    p = argparse.ArgumentParser(help="Blank random words in a text")
+    p.add_argument("file", default=sys.stdin, type=argparse.FileType('r'),
+        help="Input file")
     p.add_argument("--ratio", "-r", type=float, default=0.12,
-        help="Holes ratio")
+        help="Blanks ratio")
     p.add_argument("--fixed-size", action="store_true",
-        help="Make holes of a fixed size instead of the length of the original word")
-    p.add_argument("--numbers", "-n", action="store_true")
+        help="Make blanks of a fixed size instead of the length of the original word")
+    p.add_argument("--numbers", "-n", action="store_true",
+        help="Prefix blanks with their index, starting at 1.")
     args = p.parse_args()
 
     ratio = args.ratio
@@ -55,8 +57,8 @@ def main():
             numbers=args.numbers,
             fixed_size=args.fixed_size)
 
-    text_with_holes = re.sub(r"[a-zA-Z0-9àè]{2,}", replacer.replace_match, text)
-    print(text_with_holes)
+    text_with_blanks = re.sub(r"[a-zA-Z0-9àè]{2,}", replacer.replace_match, text)
+    print(text_with_blanks)
 
 
 if __name__ == "__main__":
