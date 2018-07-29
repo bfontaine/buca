@@ -6,6 +6,7 @@ import argparse
 from random import random
 
 DEFAULT_BLANK_SIZE = 5
+WORD_RE = re.compile(r"\w{2,}")
 
 class WordReplacer:
     def __init__(self, ratio, fixed_size=True, numbers=False):
@@ -57,7 +58,7 @@ def main():
             numbers=args.numbers,
             fixed_size=args.fixed_size)
 
-    text_with_blanks = re.sub(r"[a-zA-Z0-9àè]{2,}", replacer.replace_match, text)
+    text_with_blanks = WORD_RE.sub(replacer.replace_match, text)
     print(text_with_blanks)
 
 

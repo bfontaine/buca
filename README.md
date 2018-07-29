@@ -26,8 +26,7 @@ Because it relies on randomness, each invocation of the script on the same text
 should have different results. The number of blanked words may also change.
 
 Note that a word is defined as a sequence of two or more alphanumerical
-characters, without diacritics. I might change that but for now it covers the
-letters used in the language I’m currently learning (Italian).
+characters.
 
 ## Examples
 
