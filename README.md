@@ -4,9 +4,13 @@
 lyrics and it gives me a text with blanks I can then fill when listening to the
 song. It’s very helpful for vocabulary when learning a new language.
 
+## Install
+
+    pip3 install buca
+
 ## Usage
 
-    python3 buca.py [--ratio RATIO] [--fixed-size] [--numbers] [<file>]
+    buca [--ratio RATIO] [--fixed-size] [--numbers] [<file>]
 
 * `--ratio RATIO`: change the default blank-to-word ratio. The default is 0.12,
   i.e. about 12% of the words are removed.
@@ -40,7 +44,7 @@ due orecchie ed un solo cervello
 ### Default parameters
 
 ```
-$ python3 buca.py example.txt
+$ buca example.txt
 ```
 
 ```
@@ -55,7 +59,7 @@ due orecchie ed un solo cervello
 ### Increased ratio
 
 ```
-$ python3 buca.py --ratio 0.2 example.txt
+$ buca --ratio 0.2 example.txt
 ```
 
 ```
@@ -70,7 +74,7 @@ due ________ __ un solo cervello
 ### Fixed-size
 
 ```
-$ python3 buca.py --fixed-size example.txt
+$ buca --fixed-size example.txt
 ```
 
 ```
@@ -85,7 +89,7 @@ due orecchie ed un solo cervello
 ### With numbers
 
 ```
-$ python3 buca.py --numbers example.txt
+$ buca --numbers example.txt
 ```
 
 ```
