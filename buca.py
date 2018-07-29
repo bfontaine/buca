@@ -35,7 +35,7 @@ class WordReplacer:
         return blank
 
 def main():
-    p = argparse.ArgumentParser(help="Blank random words in a text")
+    p = argparse.ArgumentParser(description="Blank random words in a text")
     p.add_argument("file", default=sys.stdin, type=argparse.FileType('r'),
         help="Input file")
     p.add_argument("--ratio", "-r", type=float, default=0.12,
