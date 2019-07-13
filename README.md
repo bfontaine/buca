@@ -10,7 +10,7 @@ song. It’s very helpful for vocabulary when learning a new language.
 
 ## Usage
 
-    buca [--ratio RATIO] [--fixed-size] [--numbers] [<file>]
+    buca [--ratio RATIO] [--fixed-size] [--numbers] [--max-count COUNT] [<file>]
 
 * `--ratio RATIO`: change the default blank-to-word ratio. The default is 0.12,
   i.e. about 12% of the words are removed.
@@ -19,6 +19,7 @@ song. It’s very helpful for vocabulary when learning a new language.
   that doesn’t depend on the word.
 * `--numbers`: prefix blanks with an index, starting at 1. If you don’t want to
   print the text, you can report those numbers on a piece of paper.
+* `--max-count COUNT`: limit the blanked words count.
 
 If `<file>` is not provided or if it’s `-`, the script reads on `STDIN`.
 

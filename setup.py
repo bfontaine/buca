@@ -1,18 +1,18 @@
 # -*- coding: UTF-8 -*-
 
-import setuptools
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name='buca',
-    version='0.0.1',
+    version='0.0.2',
     author='Baptiste Fontaine',
     author_email='b@ptistefontaine.fr',
     py_modules=['buca'],
     url='https://github.com/bfontaine/buca',
-    license=open('LICENSE', 'r', encoding='utf-8').read(),
+    license='MIT License',
     description='Blank random words in a text',
     long_description=open('README.md', 'r', encoding='utf-8').read(),
+    long_description_content_type='text/markdown',
     install_requires=[],
     classifiers=[
         'Environment :: Console',

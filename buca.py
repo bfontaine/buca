@@ -5,6 +5,8 @@ import sys
 import argparse
 from random import random
 
+__version__ = "0.0.2"
+
 DEFAULT_BLANK_SIZE = 5
 WORD_RE = re.compile(r"\w{2,}")
 
