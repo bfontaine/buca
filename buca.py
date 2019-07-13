@@ -9,10 +9,11 @@ DEFAULT_BLANK_SIZE = 5
 WORD_RE = re.compile(r"\w{2,}")
 
 class WordReplacer:
-    def __init__(self, ratio, fixed_size=True, numbers=False):
+    def __init__(self, ratio, fixed_size=False, numbers=False, max_count=-1):
         self.ratio = ratio
         self.fixed_size = fixed_size
         self.numbers = numbers
+        self.max_count = max_count
 
         self._index = 0
 
@@ -20,6 +21,9 @@ class WordReplacer:
         return self.replace_word(match.group(0))
 
     def replace_word(self, word):
+        if self._index == self.max_count:
+            return word
+
         if random() >= self.ratio:
             return word
 
@@ -35,16 +39,21 @@ class WordReplacer:
 
         return blank
 
+    def run(self, text):
+        return WORD_RE.sub(self.replace_match, text)
+
 def main():
     p = argparse.ArgumentParser(description="Blank random words in a text")
     p.add_argument("file", default=sys.stdin, type=argparse.FileType('r'),
         help="Input file")
     p.add_argument("--ratio", "-r", type=float, default=0.12,
         help="Blanks ratio")
-    p.add_argument("--fixed-size", action="store_true",
+    p.add_argument("--fixed-size", "-F", action="store_true",
         help="Make blanks of a fixed size instead of the length of the original word")
     p.add_argument("--numbers", "-n", action="store_true",
         help="Prefix blanks with their index, starting at 1.")
+    p.add_argument("--max-count", "-c", type=int, default=-1,
+        help="Stop after this number of words.")
     args = p.parse_args()
 
     ratio = args.ratio
@@ -56,10 +65,10 @@ def main():
 
     replacer = WordReplacer(ratio,
             numbers=args.numbers,
+            max_count=args.max_count,
             fixed_size=args.fixed_size)
 
-    text_with_blanks = WORD_RE.sub(replacer.replace_match, text)
-    print(text_with_blanks)
+    print(replacer.run(text))
 
 
 if __name__ == "__main__":
